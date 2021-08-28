@@ -1,0 +1,23 @@
+{
+  "name": "Coding-Challenge-F21",
+  "version": "1.0.0",
+  "description": "## [](https://github.com/ACM-Research/Coding-Challenge-F21#no-collaboration-policy)No Collaboration Policy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitpranjal/Coding-Challenge-F21.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitpranjal/Coding-Challenge-F21/issues"
+  },
+  "homepage": "https://github.com/gitpranjal/Coding-Challenge-F21#readme",
+  "dependencies": {
+    "sentiment": "^5.0.2"
+  }
+}
