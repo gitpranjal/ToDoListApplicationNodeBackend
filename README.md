@@ -11,7 +11,7 @@ EmailID: pxu210002@utdallas.edu
 
     npm install  
     
-    npm run  
+    npm start
 
 4. After above two lines are executed, the sentiment analysis application would be running on the localhost and port 3000. Navigate to "localhost:3000" in a new chrome tab.
 
