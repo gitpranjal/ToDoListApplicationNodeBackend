@@ -1,3 +1,4 @@
+
 const Sentiment = require('sentiment');
 
 
@@ -17,4 +18,27 @@ const analSentiment = async (targetText) => {
 
 }
 
-module.exports = {analSentiment}
+const analSentimentSentenceBySentence = async (targetText) => {
+
+    return new Promise((resolve, reject) => {
+        try{
+            const sentimentAnalyzerObject = new Sentiment();
+            let sentences = targetText.split(".")
+            let sentencesSentimentObjectsList= []
+            for(let sentence of sentences)
+            {
+                let sentenceSentimentObject = sentimentAnalyzerObject.analyze(sentence)
+                let newObj = {}
+                newObj[sentence] = sentenceSentimentObject["comparative"]
+                sentencesSentimentObjectsList.push(newObj) 
+            }
+            resolve(sentencesSentimentObjectsList)
+        }
+        catch(e){
+            reject(e)
+        }
+    })
+
+}
+
+module.exports = {analSentiment, analSentimentSentenceBySentence}
