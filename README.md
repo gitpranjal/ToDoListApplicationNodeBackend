@@ -1,32 +1,47 @@
-# ACM Research Coding Challenge (Fall 2021)
+# ACM Research Coding Challenge (Fall 2021) - Submission by Pranjal Upadhyay
+Student ID: 2021607537
+EmailID: pxu210002@utdallas.edu
 
-## [](https://github.com/ACM-Research/Coding-Challenge-F21#no-collaboration-policy)No Collaboration Policy
+# Language Used: Javascript-NodeJS
+# Steps to Run the Application:
+1. Install node JS on your system. If aleady installed, check the version of it by executing node -v command on the command line
+2. Clone the application on your local system
+3. cd Into the directory of the cloned project
+3. Execute the following commands on the command line:
 
-**You may not collaborate with anyone on this challenge.**  You  _are_  allowed to use Internet documentation. If you  _do_  use existing code (either from Github, Stack Overflow, or other sources),  **please cite your sources in the README**.
+    npm install
+    npm run
 
-## [](https://github.com/ACM-Research/Coding-Challenge-F21#submission-procedure)Submission Procedure
+4. After above two lines are executed, the sentiment analysis application would be running on the localhost and port 3000. Navigate to "localhost:3000" in a new chrome tab.
 
-Please follow the below instructions on how to submit your answers.
+5. This will open the chrome tab with application running. Now, upload the text file which contains the text file for which sentiment score has to be calculated by clicking on the choose file button. As an example, input.txt has been provided in this project's directory.
 
-1.  Create a  **public**  fork of this repo and name it  `ACM-Research-Coding-Challenge-F21`. To fork this repo, click the button on the top right and click the "Fork" button.
+6. After upload is done, click on analyse button, which will navigate to a new endpoint containing the detailed sentiment analysis of the text from the text file
 
-2.  Clone the fork of the repo to your computer using  `git clone [the URL of your clone]`. You may need to install Git for this (Google it).
+## APIS USED
+# AFINN based sentiment analysis API for sentiment analysis
+For this appliction, AFINN-based sentiment analysis API has been used which is built in Node JS. AFINN is a set of words/token, whose sentiment score has been assigned from -5 to +5. Any arbitrary text is first tokenized, and then sentiment score of each of the word is determined. Finally, an object is returned which contains a detailed analysis of the sentiment scores of each of the world and overall score of the inputted text. This Object has the following parameters:
+    (a) score : This is the overall summation of all the sentiment scores of all the words
+    (b) comparitive: This is the overall sentiment score of the inputted text and is equal to the ratio of summation of all the individual scores of words and the total number of words. 
+    (c) calculation: This is a list which contains objects having words mapped against their individual score
+    (d) positive: This is a list of al the tokens/words having positive scores as per AFINN list
+    (e) nehative: This is a list of all the tokens/words having negatve sentiment scores as per AFINN list
 
-3.  Complete the Challenge based on the instructions below.
+Refer to this link for more info about the API:
+https://www.npmjs.com/package/sentiment
 
-4.  Submit your solution by filling out this [form](https://acmutd.typeform.com/to/zF1IcBGR).
+# Multer API For file upload
+For the purpose of file upload, that is, the text file containing the text which contains the target text, which is to be analysed in detail for sentiment scores, Node JS's multer library is used, which is a file upload library
+Refer to this link for more info:
+https://www.npmjs.com/package/multer
 
-## Assessment Criteria 
 
-Submissions will be evaluated holistically and based on a combination of effort, validity of approach, analysis, adherence to the prompt, use of outside resources (encouraged), promptness of your submission, and other factors. Your approach and explanation (detailed below) is the most weighted criteria, and partial solutions are accepted. 
+## Methodology
 
-## [](https://github.com/ACM-Research/Coding-Challenge-S21#question-one)Question One
+In order to create a useful utility out of this application, a simple node JS application has been created. The input-output operations occur through the file app.js and the apis have been created. The home page "/" renders an html form: fileUploadInterface.html which is in the views directory. On that form, file upload botton "Choose file" is there which allows to choose the text file. Once selected, on the backend, multer api handles the file upload and a post request is sent to another end point - "/analyseSentiment". The post request has file attribute which futher has a path attribute which specified the path in which the file has been uploaded - request.file.path. From this path, the text is read and extracted to a string variable using Node's fs library which is the standard file handling library. Once the string is with us, it's simply fed to the sentiment analysis api which provides us detailed sentiment analysis object of the text string. 
 
-[Sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) is a natural language processing technique that computes a sentiment score for a body of text. This sentiment score can quantify how positive, negative, or neutral the text is. The following dataset in  `input.txt`  contains a relatively large body of text.
-
-**Determine an overall sentiment score of the text in this file, explain what this score means, and contrast this score with what you expected.**  If your solution also provides different metrics about the text (magnitude, individual sentence score, etc.), feel free to add it to your explanation.   
-
-**You may use any programming language you feel most comfortable. We recommend Python because it is the easiest to implement. You're allowed to use any library/API you want to implement this**, just document which ones you used in this README file. Try to complete this as soon as possible as submissions are evaluated on a rolling basis.
-
-Regardless if you can or cannot answer the question, provide a short explanation of how you got your solution or how you think it can be solved in your README.md file. However, we highly recommend giving the challenge a try, you just might learn something new!
-
+The project directory is summarized as follows:
+1. app.js: Contains code for express application for input/output (I/O)
+2. sentimentCalculator.js: Contains two functions for sentiment analysis of the text, namely, 
+    analSentiment and analSentimentSentenceBySentence. analSentiment returns the sentiment analysis object for entire text, while analSentimentSentenceBySentence returns sentiment objects for each sentence (assumed to be seperated by .). These two functions are imported inside the app.js
+3. fileTextReader.js: Contains the function readTextFromFile to read any text file and return a string. 
