@@ -36,7 +36,7 @@ app.get("/", (request, response) => {
 })
 
 app.post("/analyseSentiment", upload.single('uploadedTextFile'), async function (request, response){
-    
+     // The endpoint where the sentiment analysis calculation takes place and is subsequently displayed
       try{
 
         let text = await readTextFromFile(request.file.path)
@@ -67,10 +67,3 @@ app.post("/analyseSentiment", upload.single('uploadedTextFile'), async function 
 
 
 module.exports = {app: app, port: port, hostname: hostname}
-// analSentiment("cats are stupid")
-// .then((obj) => {
-//     console.log(obj)
-// })
-// .catch(e => {
-//     console.log(e)
-// })

@@ -3,7 +3,7 @@ const Sentiment = require('sentiment');
 
 
 const analSentiment = async (targetText) => {
-
+    // Function to return the sentiment analysis object for any text string
     return new Promise((resolve, reject) => {
         const sentimentAnalyzerObject = new Sentiment();
         try{
@@ -19,7 +19,7 @@ const analSentiment = async (targetText) => {
 }
 
 const analSentimentSentenceBySentence = async (targetText) => {
-
+    // Function to split a text into sentences and return an object containing comparitive sentiment score mapped against the sentence
     return new Promise((resolve, reject) => {
         try{
             const sentimentAnalyzerObject = new Sentiment();
