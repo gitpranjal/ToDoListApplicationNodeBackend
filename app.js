@@ -7,8 +7,8 @@ const { request } = require("http")
 const { response } = require("express")
 let tasks = require("./data/tasks.json")
 
-const hostname = "localhost"
-const port = 3000
+const hostname = "0.0.0.0"
+const port =  process.env.PORT || 3000
 
 
 
