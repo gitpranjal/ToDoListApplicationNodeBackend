@@ -1,5 +1,3 @@
-const {analSentiment, analSentimentSentenceBySentence} = require("./sentimentCalculator")
-const {readTextFromFile} = require("./fileTextReader")
 const express = require("express")
 const multer = require('multer')
 const path = require('path')
@@ -7,62 +5,57 @@ const bodyParser = require("body-parser")
 const fs = require('fs').promises
 const { request } = require("http")
 const { response } = require("express")
+let tasks = require("./data/tasks.json")
 
 const hostname = "localhost"
-const port = 3000
+const port = 3001
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads');
-    },
 
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
 
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile)
-app.set('view engine', 'ejs')
 
-const upload = multer({ dest: './uploads/' })
+
 
 app.get("/", (request, response) => {
     response.render("fileUploadInterface.html")
 })
 
-app.post("/analyseSentiment", upload.single('uploadedTextFile'), async function (request, response){
-     // The endpoint where the sentiment analysis calculation takes place and is subsequently displayed
-      try{
+app.get("/tasks", (request, response) => {
+    
+    let filteredTasks = tasks.filter((taskObject) => {
+        return !taskObject.complete
+    })
+    console.log("######resquested")
+    response.json(filteredTasks)
+})
 
-        let text = await readTextFromFile(request.file.path)
-        let sentimentInfoObject = await analSentiment(text)
-        let sentimentObjectSentenceBySentence = await analSentimentSentenceBySentence(text)
-        let finalOutput = "######## ORIGNAL TEXT ######## </br>"+ text + "</br></br> ###### SENTIMENT ANALYSIS ###### </br></br>"
-        finalOutput += "</br>Overall comparitive sentiment score (-5 being most negative, +5 being mst positive, 0 being neutral)</br>"
-        finalOutput += ""+sentimentInfoObject["comparative"]+"</br>"
-        finalOutput += "</br>Sentiment score of each word/token (-5 being most negative +5 being postive)</br>"
+app.post("/addTask", (request, response) => {
 
-        for(let tokenObject of sentimentInfoObject["calculation"])
-        finalOutput += JSON.stringify(tokenObject)+"</br>"
+   
+    let newTask = request.body
+    newTask.id = tasks.length + 1
+    newTask.complete = false
 
-        finalOutput += "</br>Sentiment score of each sentence </br>"
-        for(let sentencesSentimentObjectsList of sentimentObjectSentenceBySentence)
-            finalOutput += JSON.stringify(sentencesSentimentObjectsList)+"</br>"
-        
+    tasks.push(newTask)
+    fs.writeFile("./data/tasks.json", JSON.stringify(tasks))
+    response.json(tasks)
 
-        //JSON.stringify(sentimentInfoObject)
-        response.send(finalOutput)
-      }
-      catch(e){
-          response.send(e)
-      }
-    }
-)
+})
+
+app.post("/updateTasks", (request, response) => {
+
+   
+    let newTask = request.body
+    newTask.id = tasks.length + 1
+    newTask.complete = false
+
+    tasks.push(newTask)
+    fs.writeFile("./data/tasks.json", JSON.stringify(tasks))
+    response.json(tasks)
+
+})
 
 
 
