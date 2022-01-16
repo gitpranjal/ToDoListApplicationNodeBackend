@@ -19,10 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 app.get("/", (request, response) => {
-    response.render("fileUploadInterface.html")
-})
-
-app.get("/tasks", (request, response) => {
     
     let filteredTasks = tasks.filter((taskObject) => {
         return !taskObject.complete
