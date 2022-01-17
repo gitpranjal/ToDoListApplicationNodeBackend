@@ -44,11 +44,10 @@ app.post("/addTask", (request, response) => {
 app.post("/updateTasks", (request, response) => {
 
    
-    let newTask = request.body
-    newTask.id = tasks.length + 1
-    newTask.complete = false
-
-    tasks.push(newTask)
+    let newTasks = request.body.newTasksList
+    
+    console.log("####### new tasks #########", newTasks)
+    tasks.concat(newTasks)
     fs.writeFile("./data/tasks.json", JSON.stringify(tasks))
     response.json(tasks)
 
