@@ -20,7 +20,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.get("/", (request, response) => {
-    
+    //tasks = require("./data/tasks.json")
+    fs.readFile('./data/tasks.json', 'utf8', function(err, data){
+      
+        // Display the file content
+        console.log(data);
+        tasks = data
+    });
     let filteredTasks = tasks.filter((taskObject) => {
         return !taskObject.complete
     })
@@ -47,7 +53,7 @@ app.post("/updateTasks", (request, response) => {
     let newTasks = request.body.newTasksList
     
     console.log("####### new tasks #########", newTasks)
-    tasks.concat(newTasks)
+    tasks = newTasks
     fs.writeFile("./data/tasks.json", JSON.stringify(tasks))
     response.json(tasks)
 

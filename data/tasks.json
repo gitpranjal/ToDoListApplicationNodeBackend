@@ -1,3 +1,1 @@
-[{
-    "taskName": "Task A", "taskDeadline": "Date A", "author": "Sam", "status": "Pending", "dateAdded": "10th January 2022"
-}]
+[{"taskName":"Task A","taskDeadline":"Date A","author":"Sam","status":"Complete","dateAdded":"10th January 2022"}]
