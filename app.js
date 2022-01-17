@@ -6,6 +6,7 @@ const fs = require('fs').promises
 const { request } = require("http")
 const { response } = require("express")
 let tasks = require("./data/tasks.json")
+const cors = require("cors")
 
 const hostname = "0.0.0.0"
 const port =  process.env.PORT || 3000
@@ -16,7 +17,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-
+app.use(cors())
 
 app.get("/", (request, response) => {
     
